@@ -35,9 +35,9 @@ entity decoder is
 		-- Does this instruction requires writing to memory.
 		-- This also indicates whether the ADDR input of the MMU should be taken from the value inside RegA (mem read), or inside RegB (mem write)
 		-- RegB is always assigned to, so no memory read can be performed at the address contained inside RegB (with RegA != RegB)
-		MEM_W_EN : out std_logic
+		MEM_W_EN : out std_logic;
 	
-		NEXT_PC : out std_logic_vector(
+		NEXT_PC : out std_logic_vector(7 downto 0)
 	);
 end decoder;
 
@@ -73,6 +73,7 @@ architecture Behavioral of decoder is
 					-- For non-ALU instructions, immediates are always long immediates (used to branch to specific immediate addresses)
 					if INST(15) = '1' then
 						LONG_IMM <= INST(9 downto 0);
+					end if;
 				end if;
 			end if;
 		end process;
